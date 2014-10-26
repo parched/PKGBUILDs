@@ -1,0 +1,32 @@
+# Maintainer: James Duley <jagduley gmail>
+
+pkgname=berrybots
+pkgver=1.3.2
+pkgrel=3
+pkgdesc='A programming game where the player programs a ship that moves around the stage, sees gameplay events, and shoots at other ships.'
+arch=('i686' 'x86_64')
+url="http://berrybots.com/"
+license=('custom')
+depends=('libarchive' 'wxgtk' 'sfml')
+makedepends=()
+optdepends=()
+source=(http://berrybots.com/files/${pkgname}_src_${pkgver}.zip)
+md5sums=('ffbcea18aaecc2e7d86467fb8972f5e2')
+         
+
+build() {  
+  cd $pkgname
+  sed -i "s/--libs/--libs core,adv/g" configure
+  ./configure --prefix=/usr
+  make linux
+}
+
+package(){
+cd "$srcdir/$pkgname"
+
+  make DESTDIR="$pkgdir/" install
+  install -d $pkgdir/usr/share/licenses/$pkgname
+  mv $pkgdir/usr/share/$pkgname/LICENSE $pkgdir/usr/share/licenses/$pkgname
+}
+
+# vim sw=2:ts=2 et:
