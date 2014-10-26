@@ -15,3 +15,7 @@
 
 pkg/
 src/
+
+
+#specfic dirs/files
+python-slycot-git/Slycot
