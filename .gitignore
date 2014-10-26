@@ -7,6 +7,9 @@
 *.log
 *.log.*
 *.sig
+
+*.pkg
+
 # AUR metadata
 .AURINFO
 
