@@ -1,0 +1,36 @@
+# Maintainer: James Duley <jagduley gmail>
+
+pkgname=opentx
+pkgver=2.0.13
+pkgrel=1
+pkgdesc="Companion for custom firmware for RC transmitters."
+arch=('i686' 'x86_64')
+url="http://www.open-tx.org"
+license=('GPL2')
+depends=('phonon-qt4' 'python2-pyqt4' 'sdl' 'libusb-compat')
+makedepends=('cmake' 'xerces-c' 'xsd' 'avr-gcc' 'icu' 'bc' 'svn')
+source=("https://github.com/opentx/opentx/archive/${pkgver}.tar.gz")
+md5sums=('0f20987067d8e7cdfed87b35327337da')
+
+prepare() {
+	find ${srcdir} -type f -name *.py -print0 | xargs -0 sed -i "s/env python/env python2/"
+	sed -i "s/python/python2/g" ${srcdir}/${pkgname}-${pkgver}/radio/src/Makefile
+}
+
+build() {
+	mkdir "${srcdir}/build"
+	cd "${srcdir}/build"
+
+	cmake -DCMAKE_INSTALL_PREFIX=/usr "${srcdir}/${pkgname}-${pkgver}/companion/src"
+
+	make
+}
+
+package() {
+	cd "${srcdir}/build"
+
+	make DESTDIR=${pkgdir} install
+
+	rm -r ${pkgdir}/etc/
+	# TODO: udev rules
+}
