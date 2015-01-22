@@ -1,24 +1,18 @@
 # Maintainer: James Duley <jagduley gmail>
 
-pkgname=openpilot-git
+pkgname=openpilot
 _gitname=OpenPilot
-pkgver=RELEASE.14.10.r0.g738b37c
+pkgver=14.10_6_g57e5499
 pkgrel=1
-pkgdesc="Ground control station with firmware for OpenPilot (next branch)."
+pkgdesc="Ground control station with firmware for OpenPilot."
 arch=('i686' 'x86_64')
 url="https://openpilot.org"
 license=('GPL')
 depends=('qt5-svg' 'qt5-serialport' 'qt5-multimedia' 'sdl' 'libusb-compat')
 makedepends=('git' 'python2' 'arm-none-eabi-gcc' 'qt5-tools' 'qt5-quick1' 'qt5-quickcontrols')
-conflicts=('openpilot')
-source=("$_gitname::git://git.openpilot.org/OpenPilot.git#branch=next")
-# Because the sources are not static, skip Git checksum:
-md5sums=('SKIP')
-
-pkgver() {
-  cd "$_gitname"
-  git describe --long | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
-}
+conflicts=('openpilot-git')
+source=("http://202.0.41.202/openpilot/${_gitname}-RELEASE-${pkgver//_/-}.tar.gz")
+md5sums=('cf1db4a6852eb0d46204e85379a1cb1f')
 
 build() {
   cd "$srcdir/$_gitname"
