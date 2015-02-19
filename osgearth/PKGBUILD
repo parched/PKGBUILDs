@@ -1,0 +1,40 @@
+# Maintainer: James Duley <jagduley gmail>
+# Contributor: A. Weiss <adam [at] archlinux.us>
+# Contributor: Samuel Mesa <samuelmesa [at] linuxmail.org>
+
+pkgname=osgearth
+pkgver=2.6
+pkgrel=1
+pkgdesc="A terrain rendering toolkit for OpenSceneGraph"
+arch=('i686' 'x86_64')
+url=('http://www.osgearth.org')
+license=('LGPL')
+depends=('openscenegraph' 'gdal' 'expat' 'curl' 'minizip')
+optdepends=('geos: Imrpoved vector support'
+            'sqlite: Flat file cache'
+            'libzip: Archive support' 'qt5-base')
+makedepends=('cmake')
+provides=('osgearth')
+conflicts=('osgearth')
+source=("https://github.com/gwaldron/osgearth/archive/${pkgname}-${pkgver}.tar.gz")
+md5sums=('f3dadfa790971faa58e58689e624cfba')
+
+build() {
+  cd $srcdir
+  
+  # Don't use V8 if installed.
+  sed -i /V8/d ${pkgname}-${pkgname}-${pkgver}/CMakeLists.txt
+
+  mkdir -p build
+  cd build
+
+  cmake ../${pkgname}-${pkgname}-${pkgver} \
+  -DCMAKE_INSTALL_PREFIX=/usr
+  make
+  
+}
+
+package() {
+   cd build
+   make DESTDIR=$pkgdir install
+}
