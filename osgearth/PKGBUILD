@@ -25,6 +25,10 @@ build() {
   # Don't use V8 if installed.
   sed -i /V8/d ${pkgname}-${pkgname}-${pkgver}/CMakeLists.txt
 
+  # Don't install to /usr/lib64
+  sed -i 's/\${LIB_POSTFIX}//g' ${pkgname}-${pkgname}-${pkgver}/CMakeModules/OsgEarthMacroUtils.cmake \
+                                ${pkgname}-${pkgname}-${pkgver}/CMakeModules/ModuleInstall.cmake
+
   mkdir -p build
   cd build
 
