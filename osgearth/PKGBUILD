@@ -14,8 +14,6 @@ optdepends=('geos: Imrpoved vector support'
             'sqlite: Flat file cache'
             'libzip: Archive support' 'qt5-base')
 makedepends=('cmake')
-provides=('osgearth')
-conflicts=('osgearth')
 source=("https://github.com/gwaldron/osgearth/archive/${pkgname}-${pkgver}.tar.gz")
 md5sums=('f3dadfa790971faa58e58689e624cfba')
 
