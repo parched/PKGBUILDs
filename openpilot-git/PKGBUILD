@@ -22,7 +22,7 @@ pkgver() {
 
 build() {
   cd "$srcdir/$_gitname"
-  make all
+  make opfw_resource openpilotgcs
 }
 
 package() {
