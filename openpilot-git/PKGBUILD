@@ -2,7 +2,7 @@
 
 pkgname=openpilot-git
 _gitname=OpenPilot
-pkgver=15.01.r73.gd1b8321
+pkgver=15.02+r68_gbe9f4ae
 pkgrel=1
 pkgdesc="Ground control station with firmware for OpenPilot (next branch)."
 arch=('i686' 'x86_64')
@@ -16,8 +16,8 @@ source=("$_gitname::git://git.openpilot.org/OpenPilot.git#branch=next")
 md5sums=('SKIP')
 
 pkgver() {
-  cd "$_gitname"
-  git describe --long | sed -r 's/RELEASE-//;s/([^-]*-g)/r\1/;s/-/./g'
+  cd "$srcdir/$_gitname"
+  python2 make/scripts/version-info.py --format='${LABEL}' | sed -r 's/RELEASE-//;s/-/_/g'
 }
 
 build() {
